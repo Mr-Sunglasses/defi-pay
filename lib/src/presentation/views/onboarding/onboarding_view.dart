@@ -158,7 +158,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   }
 
   void finishOnBoarding() {
-    Navigator.pushReplacementNamed(context, AuthView.routeName);
+    Navigator.pushNamed(context, AuthView.routeName);
   }
 }
 
