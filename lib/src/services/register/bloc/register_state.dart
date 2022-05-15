@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
 abstract class RegisterState extends Equatable {
@@ -28,10 +29,20 @@ class RegisterFailedState extends RegisterState {
 }
 
 class RegisterCredentialsInvalidState extends RegisterState {
-  const RegisterCredentialsInvalidState(this.emailValid, this.passwordValid);
+  const RegisterCredentialsInvalidState(
+      this.emailValid, this.passwordValid, this.nameValid, this.passwordsMatch);
 
   final bool emailValid;
   final bool passwordValid;
+  final bool nameValid;
+  final bool passwordsMatch;
+
   @override
-  List<Object> get props => [emailValid, passwordValid];
+  List<Object> get props =>
+      [emailValid, passwordValid, nameValid, passwordsMatch];
+
+  @override
+  String toString() {
+    return 'RegisterCredentialsInvalidState(emailValid: $emailValid, passwordValid: $passwordValid, nameValid: $nameValid, passwordsMatch: $passwordsMatch)';
+  }
 }

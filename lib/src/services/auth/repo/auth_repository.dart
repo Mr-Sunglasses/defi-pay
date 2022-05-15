@@ -49,6 +49,7 @@ class AuthRepository {
   Future<Messenger> createUserWithEmailAndPassword({
     required String email,
     required String password,
+    required String name,
   }) async {
     try {
       await _authService.createUserWithEmailAndPassword(

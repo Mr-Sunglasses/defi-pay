@@ -1,3 +1,5 @@
+import 'package:defi/src/presentation/shared/utils/color.dart';
+import 'package:defi/src/presentation/views/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,11 +22,7 @@ class MyApp extends StatelessWidget {
     } else if (state is Unauthenticated) {
       return const OnBoardingView();
     } else if (state is Authenticated) {
-      return const Scaffold(
-        body: Center(
-          child: Text('Authenticated'),
-        ),
-      );
+      return const HomeView();
     } else {
       return const Scaffold(
         body: Center(
@@ -50,7 +48,6 @@ class MyApp extends StatelessWidget {
         ],
         child: BlocBuilder<AuthBloc, AuthState>(
           builder: (context, state) {
-            print(state.runtimeType);
             return MaterialApp(
               // Providing a restorationScopeId allows the Navigator built by the
               // MaterialApp to restore the navigation stack when a user leaves and
@@ -61,7 +58,11 @@ class MyApp extends StatelessWidget {
               // Define a light and dark color theme. Then, read the user's
               // preferred ThemeMode (light, dark, or system default) from the
               // SettingsController to display the correct theme.
-              theme: ThemeData(),
+              theme: ThemeData(
+                brightness: Brightness.dark,
+                primarySwatch: ColorUtils.primarySwatch,
+                fontFamily: 'Sans',
+              ),
 
               debugShowCheckedModeBanner: false,
               home: _getHome(state),

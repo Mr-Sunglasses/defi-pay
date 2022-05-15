@@ -148,7 +148,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 ),
               ]
             : null,
-        color: _currentPage == index ? Colors.red : ColorUtils.primary,
+        color: _currentPage == index ? Colors.white : ColorUtils.primary,
       ),
       margin: const EdgeInsets.only(right: 10),
       height: _currentPage == index ? 12 : 9,

@@ -19,10 +19,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     RegisterWithEmailPassword event,
     Emitter<RegisterState> emit,
   ) async {
+    emit(const RegisterLoadingState());
     final messenger = await _authRepository.createUserWithEmailAndPassword(
-      email: event.email,
-      password: event.password,
-    );
+        email: event.email, password: event.password, name: event.name);
     if (messenger.error) {
       emit(RegisterFailedState(messenger.message));
     } else {
@@ -34,10 +33,18 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       RegisterCredentialsChanged event, Emitter<RegisterState> emit) async {
     final emailValid = Validate.email(event.email);
     final passwordValid = Validate.password(event.password);
-    if (emailValid && passwordValid) {
+    final passwordsMatch = (event.password.isNotEmpty &&
+        event.confirmPassword.isNotEmpty &&
+        event.password == event.confirmPassword);
+    // TODO : add name Validator
+    const nameValid = true;
+    if (emailValid && passwordValid && passwordsMatch && nameValid) {
       emit(const RegisterInitState());
     } else {
-      emit(RegisterCredentialsInvalidState(emailValid, passwordValid));
+      emit(
+        RegisterCredentialsInvalidState(
+            emailValid, passwordValid, nameValid, passwordsMatch),
+      );
     }
   }
 }

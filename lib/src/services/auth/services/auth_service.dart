@@ -1,4 +1,3 @@
-
 import '../../../models/user.dart';
 
 abstract class AuthService {
@@ -8,6 +7,7 @@ abstract class AuthService {
   Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password,
+    String name = '',
   });
 
   Future<void> signInWithEmailAndPassword({
@@ -38,11 +38,11 @@ class _MockService implements AuthService {
   }
 
   @override
-  Future<void> createUserWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
-    await Future.delayed(const Duration(milliseconds: 500), () {
+  Future<void> createUserWithEmailAndPassword(
+      {required String email,
+      required String password,
+      String name = ''}) async {
+    await Future.delayed(const Duration(milliseconds: 3000), () {
       _isSignedIn = true;
       _user = UserModel(email: email, id: password);
     });
