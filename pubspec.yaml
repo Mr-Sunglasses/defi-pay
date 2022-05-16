@@ -27,8 +27,11 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  bip39: ^1.0.6
   bloc: ^8.0.3
+  cloud_firestore: ^3.1.15
   cupertino_icons: ^1.0.2
+  ed25519_hd_key: ^2.2.0
   equatable: ^2.0.3
   firebase_auth: ^3.3.18
   firebase_core: ^1.17.0
@@ -36,6 +39,8 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.1
   google_fonts: ^2.3.2
+  hex: ^0.2.0
+  web3dart: ^2.3.5
 
 dev_dependencies:
   flutter_lints: ^2.0.0

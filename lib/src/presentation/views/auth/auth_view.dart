@@ -121,6 +121,7 @@ class _RegisterFormState extends State<RegisterForm> {
         }
 
         if (state is RegisterSuccessState) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           BlocProvider.of<AuthBloc>(context).add(AuthEventLogin());
           Navigator.of(context).pop();
         }

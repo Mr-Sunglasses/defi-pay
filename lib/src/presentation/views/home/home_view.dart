@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../services/wallet/firestore.dart';
+import '../../../services/wallet/wallet_creation.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
 
@@ -12,10 +15,31 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  int? selected;
+  String? pubAddress;
+  String? privAddress;
+  String? username;
+
   @override
   void initState() {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     super.initState();
+    details();
+  }
+
+  details() async {
+    dynamic data = await getUserDetails();
+    data != null
+        ? setState(() {
+            privAddress = data['privateKey'];
+            pubAddress = data['publicKey'];
+            username = data['user_name'];
+            bool created = data['wallet_created'];
+            created == true ? selected = 1 : selected = 0;
+          })
+        : setState(() {
+            selected = 0;
+          });
   }
 
   @override
@@ -31,9 +55,9 @@ class _HomeViewState extends State<HomeView> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    'Satyam',
-                    style: TextStyle(
+                  Text(
+                    authRepository.user!.email,
+                    style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                         fontSize: 20),
@@ -62,6 +86,9 @@ class _HomeViewState extends State<HomeView> {
                 decoration: BoxDecoration(
                   color: Colors.white30,
                   borderRadius: BorderRadius.circular(8),
+                ),
+                child: const Center(
+                  child: Text('Previous Transactions'),
                 ),
               ),
               const SizedBox(height: 32),
@@ -96,7 +123,18 @@ class _HomeViewState extends State<HomeView> {
                           fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    setState(() {
+                      selected = 1;
+                    });
+                    WalletAddress service = WalletAddress();
+                    final mnemonic = service.generateMnemonic();
+                    final privateKey = await service.getPrivateKey(mnemonic);
+                    final publicKey = await service.getPublicKey(privateKey);
+                    privAddress = privateKey;
+                    pubAddress = publicKey.toString();
+                    addUserDetails(privateKey, publicKey);
+                  },
                   child: const Text(
                     'Recieve',
                   ),
