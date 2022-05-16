@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../shared/utils/color.dart';
 import '../../shared/utils/font.dart';
@@ -23,16 +24,18 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   final _dataList = [
     _PageData(
-      title: 'Screen 1',
-    ),
+        lottie: 'https://assets8.lottiefiles.com/packages/lf20_fdd5z83w.json',
+        title: 'Convenience of UPI'),
     _PageData(
-      title: 'Screen 2',
-    ),
+        lottie:
+            'https://assets8.lottiefiles.com/private_files/lf30_tw05dqnq.json',
+        title: 'Security of Crypto'),
     _PageData(
-      title: 'Screen 3',
-    ),
+        lottie: 'https://assets4.lottiefiles.com/packages/lf20_3hzWiO.json',
+        title: 'Trust of Gold'),
     _PageData(
-      title: 'Screen 4',
+      lottie: 'https://assets10.lottiefiles.com/packages/lf20_xxeypw7y.json',
+      title: 'Aurum',
     ),
   ];
 
@@ -53,7 +56,26 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               physics: const BouncingScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return Center(
-                  child: Text(_dataList[index].title),
+                  child: Column(
+                    children: [
+                      const Spacer(),
+                      Text(
+                        _dataList[index].title,
+                        style: FontUtils.heading.copyWith(
+                            fontSize: 34,
+                            fontFamily: 'Sans',
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const Spacer(
+                        flex: 1,
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Lottie.network(_dataList[index].lottie),
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
                 );
               },
               onPageChanged: (value) => setState(() => _currentPage = value),
@@ -163,7 +185,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 }
 
 class _PageData {
+  final String lottie;
   final String title;
-
-  _PageData({required this.title});
+  _PageData({required this.title, required this.lottie});
 }
